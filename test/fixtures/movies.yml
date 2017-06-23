@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  storyline: MyText
+  release: 2017-06-23
+  genre: MyString
+  imdb: MyString
+
+two:
+  title: MyString
+  storyline: MyText
+  release: 2017-06-23
+  genre: MyString
+  imdb: MyString

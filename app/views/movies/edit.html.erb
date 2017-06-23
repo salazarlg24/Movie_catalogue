@@ -1,0 +1,51 @@
+
+<div class="navbar-fixed">
+	<nav class="z-depth-4 blue-grey darken-1">
+		<div class="nav-wrapper">
+			<a href="/movies" class="brand-logo center">Movie Catalogue</a>
+		</div>
+	</nav>
+</div>
+
+<div class="container z-depth-5" style="padding: 20px; background-color: white;">
+	<h1 style="margin-top: 0px;">Edit movie:</h1>
+
+	<% if flash[:errors] %>
+	    <% flash[:errors].each do |errs| %>
+	    	<p style="color: red"><%= errs %></p>
+	    <% end %>
+	<% end %>
+	<div class="row">
+		<form action="/movies/<%= @movie.id %>" method="post" class="col s12 m6">
+			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<input type="hidden" name="_method" value="patch">
+
+			<div class="input-field col s12">
+				<input type="text" name="title" value="<%= @movie.title %>">
+				 <label for="title">Title</label>
+			</div>
+			<div class="input-field col s12">
+				<textarea id="textarea1" class="materialize-textarea" data-length="120" name="storyline"><%= @movie.storyline %></textarea>
+				<label for="textarea1">Storyline</label>
+			</div>
+			<div class="input-field col s12">
+				<input type="date" class="datepicker" name="release" id="release" value="<%= @movie.release %>">
+				<label for="date">Release Date</label>
+			</div>
+			<div class="input-field col s12">
+				<input type="text" name="genre" value="<%= @movie.genre %>">
+				<label for="genre">Genre</label>
+			</div>
+			<div class="input-field col s12">
+				<input type="text" name="imdb" value="<%= @movie.imdb %>">
+				<label for="imdb">IMDb url</label>
+			</div>
+
+			<button class="waves-effect waves-light btn blue-grey darken-1" type="submit">Edit</button>
+			<form action="/movies">
+			<button class="waves-effect waves-light btn blue-grey darken-1" type="submit">Cancel</button>
+		</form>
+		</form>
+		
+	</div>
+</div>

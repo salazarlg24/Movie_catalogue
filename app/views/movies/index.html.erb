@@ -1,0 +1,81 @@
+<div class="navbar-fixed">
+	<nav class="z-depth-4 blue-grey darken-1">
+		<div class="nav-wrapper">
+		  <a href="/movies" class="brand-logo center">Movie Catalogue</a>
+		</div>
+	</nav>
+</div>
+<div class="container z-depth-5" style="padding: 20px; background-color: white;">
+	<h1 style="margin-top: 0px;" class="light">Movie Catalogue</h1>
+	<h4 class="light">Add a movie:</h4>
+
+	<% if flash[:errors] %>
+	    <% flash[:errors].each do |errs| %>
+	    	<p style="color: red"><%= errs %></p>
+	    <% end %>
+	<% end %>
+
+	<div class="row">
+		<form action="/movies" method="post" class="col s12 m6">
+			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<div class="input-field col s12">
+				<input type="text" name="title">
+				 <label for="title">Title</label>
+			</div>
+			<div class="input-field col s12">
+				<textarea id="textarea1" class="materialize-textarea" data-length="120" name="storyline"></textarea>
+				<label for="textarea1">Storyline</label>
+			</div>
+			<div class="input-field col s12">
+				<input type="date" class="datepicker" name="release" id="release">
+				<label for="release">Release Date</label>
+			</div>
+			<div class="input-field col s12">
+				<input type="text" name="genre">
+				<label for="genre">Genre</label>
+			</div>
+			<div class="input-field col s12">
+				<input type="text" name="imdb">
+				<label for="imdb">IMDb url</label>
+			</div>
+
+			<button class="waves-effect waves-light btn light blue-grey darken-1" type="submit">Add Movie</button>
+		</form>
+	</div>
+
+	<div class="row">
+		<table class="highlight">
+			<thead">
+				<tr>
+					<th>Title:</th>
+					<th>Storyline:</th>
+					<th>Release Date:</th>
+					<th>Genre:</th>
+					<th>Action:</th>
+				</tr>
+			</thead>
+
+				<% @movies.each do |movie| %>
+					<tr>
+						<td><a href="<%= movie.imdb %>"><%= movie.title %></a></td>
+						<td><%= movie.storyline %></td>
+						<td><%= movie.release.strftime("%B %d, %Y") %></td>
+						<td><%= movie.genre %></td>
+						<td>
+							<form action="/movies/<%= movie.id %>/edit">
+								<button class="waves-effect waves-light btn blue-grey darken-1" type="submit">Edit</button>
+							</form>
+							<form action="/movies/<%= movie.id %>" method="post">
+							<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+							<input type="hidden" name="_method" value="delete">
+
+								<button class="waves-effect waves-light btn blue-grey darken-1" type="submit" style="margin-top: 5px;">Delete</button>
+							</form>
+						</td>
+					</tr>
+				<% end %>
+			
+		</table>
+	</div>
+</div>
+
