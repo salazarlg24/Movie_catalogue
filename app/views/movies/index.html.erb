@@ -82,9 +82,9 @@
 				<% @movies.each do |movie| %>
 					<tr id="<%= movie.title.downcase %>">
 						<td><a href="<%= movie.imdb %>"><%= movie.title.titleize %></a></td>
-						<td><%= movie.storyline %></td>
+						<td><%= movie.storyline.capitalize %></td>
 						<td><%= movie.release.strftime("%B %d, %Y") %></td>
-						<td><%= movie.genre %></td>
+						<td><%= movie.genre.titleize %></td>
 						<td>
 							<form action="/movies/<%= movie.id %>/edit">
 								<button class="waves-effect waves-light btn blue-grey darken-1" type="submit">Edit</button>
