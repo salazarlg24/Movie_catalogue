@@ -1,20 +1,42 @@
 <div class="navbar-fixed">
 	<nav class="z-depth-4 blue-grey darken-1">
-		<div class="nav-wrapper">
-		  <a href="/movies" class="brand-logo center">Movie Catalogue</a>
+		<div class="nav-wrapper" style="padding-right: 30px;">
+			<a href="/movies" class="brand-logo left" style="padding-left: 30px;">Movie Catalogue</a>
+			
+			<!-- Search Bar -->
+			<form style="width: 30%;" class="right" action="/search">
+				<div class="input-field">
+					<input id="search" type="search" name="title" placeholder="Title" required>
+					<label class="label-icon" for="search">
+						<i class="material-icons">search</i>
+					</label>
+					<i class="material-icons">close</i>
+				</div>
+			</form>
+			<!---->
 		</div>
 	</nav>
 </div>
+
+<!-- Error if no movie is found -->
+<% if flash[:err] %>
+	<h3 style="width: 100%" class=" light center sticky deep-orange-text text-accent-3"><%= flash[:err] %></h3>
+<% end %>
+<!---->
+
 <div class="container z-depth-5" style="padding: 20px; background-color: white;">
 	<h1 style="margin-top: 0px;" class="light">Movie Catalogue</h1>
 	<h4 class="light">Add a movie:</h4>
 
+	<!-- No Title Error -->
 	<% if flash[:errors] %>
 	    <% flash[:errors].each do |errs| %>
 	    	<p style="color: red"><%= errs %></p>
 	    <% end %>
 	<% end %>
+	<!---->
 
+	<!-- Add Movie Form -->
 	<div class="row">
 		<form action="/movies" method="post" class="col s12 m6">
 			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
@@ -42,7 +64,9 @@
 			<button class="waves-effect waves-light btn light blue-grey darken-1" type="submit">Add Movie</button>
 		</form>
 	</div>
+	<!---->
 
+	<!-- All movies Displayed -->
 	<div class="row">
 		<table class="highlight">
 			<thead">
@@ -56,8 +80,8 @@
 			</thead>
 
 				<% @movies.each do |movie| %>
-					<tr>
-						<td><a href="<%= movie.imdb %>"><%= movie.title %></a></td>
+					<tr id="<%= movie.title.downcase %>">
+						<td><a href="<%= movie.imdb %>"><%= movie.title.titleize %></a></td>
 						<td><%= movie.storyline %></td>
 						<td><%= movie.release.strftime("%B %d, %Y") %></td>
 						<td><%= movie.genre %></td>
@@ -77,5 +101,6 @@
 			
 		</table>
 	</div>
+	<!---->
 </div>
 

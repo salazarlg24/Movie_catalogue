@@ -3,8 +3,18 @@ class MoviesController < ApplicationController
   	@movies = Movie.all
   end
 
+  def search
+    movie = Movie.find_by(title: params[:title].downcase)
+    if movie
+      redirect_to "/#{'#'+ movie.title.downcase}"
+    else
+      flash[:err] = 'Sorry, could not find movie'
+      redirect_to :back
+    end
+  end
+
   def create
-  	movie = Movie.create(title: params[:title], storyline: params[:storyline], release: params[:release], genre: params[:genre], imdb: params[:imdb] )
+  	movie = Movie.create(title: params[:title].downcase, storyline: params[:storyline], release: params[:release], genre: params[:genre], imdb: params[:imdb] )
   	if movie.valid?
   		redirect_to :back
   	else
